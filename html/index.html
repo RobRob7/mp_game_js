@@ -2,25 +2,67 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Tanks and Stuff</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Connect 4</title>
 		<link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
 		<style>
 			body { 
-				margin: 0; 
-				background-color: black;
+				background-color: grey;
+				text-align: center; 
+				font-family: Arial, sans-serif; 
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				height: 100vh;
+				margin: 0;
+			}
+
+			.board { 
+				display: grid;
+				grid-template-columns: repeat(7, 60px);
+				gap: 5px;
+				margin: 20px auto;
+			}
+
+			.player {
+				color: red;
+			}
+
+			.cell { 
+				width: 60px;
+				height: 60px; 
+				background: lightgray; 
+				border-radius: 50%; 
+				display: flex; 
+				align-items: center; 
+				justify-content: center; 
+			}
+
+			.player1 { 
+				background: crimson; 
+			}
+
+			.player2 { 
+				background: darkblue; 
+			}
+
+			.column { 
+				display: flex; 
+				flex-direction: column-reverse; 
+			}
+			button { 
+				margin-top: 20px; 
+				padding: 10px; 
+				font-size: 16px; 
 			}
 		</style>
-
-		<script type="importmap">
-			{
-			  "imports": {
-				"three": "https://cdn.jsdelivr.net/npm/three@v0.173.0/build/three.module.js",
-				"three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.173.0/examples/jsm/"
-			  }
-			}
-		</script>
 	</head>
 	<body>
-		<script type="module" src="../js/main.js"></script>
+		<h1>Connect 4</h1>
+		<div id="gameBoard" class="board"></div>
+		<div id="currentPlayerLabel" class="player"></div>
+		<button onclick="resetGame()">Restart</button>
+		<script src="../js/main.js"></script>
 	</body>
 </html>
