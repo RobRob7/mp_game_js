@@ -1,3 +1,7 @@
+// CS 532 - Modern Web Technologies
+// Robert J. Armendariz
+// 03-03-2025
+// File: main.js
 
 // number of rows on boardStruct
 const rows = 6;
@@ -18,7 +22,7 @@ const currentPlayerLabel = document.getElementById('currentPlayerLabel');
 const playerLabelArray = ['Player 1 Turn', 'Player 2 Turn'];
 
 // array containing all possible player chip colors
-const playerLabelColorArray = ['crimson', 'blue'];
+const playerLabelColorArray = ['crimson', 'darkcyan'];
 
 // as soon as DOM loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -29,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // this function will populate the inital game board
 function createBoard() {
-    // get div id 'gameBoard'
+    // get element id 'gameBoard'
     const gameBoard = document.getElementById('gameBoard');
 
     // set game board innerHTML to empty
@@ -37,10 +41,10 @@ function createBoard() {
 
     // loop through all columns
     for (let c = 0; c < columns; c++) {
-        // create new html element 'div'
+        // create new html element 'div' for column
         const column = document.createElement('div');
 
-        // add column
+        // add 'column' class to column element
         column.classList.add('column');
 
         // add column value to new column entry
@@ -48,7 +52,7 @@ function createBoard() {
 
         // loop through all rows of board
         for (let r = 0; r < rows; r++) {
-            // create element for cell
+            // create new html element 'div' for cell
             const cell = document.createElement('div');
 
             // add CSS class 'cell' to cell element
@@ -64,6 +68,16 @@ function createBoard() {
         // listen for click on column (call dropPiece function on click
         // for appropriate column)
         column.addEventListener('click', () => dropPiece(c));
+
+        // listen for hover on column (highlight column)
+        column.addEventListener('mouseenter', () => {
+            column.classList.add('highlight');
+        });
+
+        // listen for mouse leaving column (remove highlight)
+        column.addEventListener('mouseleave', () => {
+            column.classList.remove('highlight');
+        });
 
         // add column to game board
         gameBoard.appendChild(column);
@@ -87,15 +101,18 @@ function dropPiece(col) {
             if (checkWin(r, col)) {
                 // display pop-up window of winner
                 setTimeout(() => alert(`${currentPlayer.toUpperCase()} Wins!`), 7);
+
+                // restart the game (in play after alert window is closed)
+                setTimeout(() => resetGame(), 7);
                 return;
             }
             
-            // after piece is dropped (swap to other player)
+            // if current player is player 1, swap to player2
             if(currentPlayer == 'player1') {
                 currentPlayerLabel.style.color = playerLabelColorArray[1];
                 currentPlayerLabel.textContent = playerLabelArray[1];
                 currentPlayer = 'player2';
-            } else {
+            } else { // if current player is player 2, swap to player1
                 currentPlayerLabel.style.color = playerLabelColorArray[0];
                 currentPlayerLabel.textContent = playerLabelArray[0];
                 currentPlayer = 'player1';

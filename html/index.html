@@ -1,3 +1,10 @@
+<!-- 
+// CS 532 - Modern Web Technologies
+// Robert J. Armendariz
+// 03-03-2025
+// File: index.html
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -31,6 +38,7 @@
 
 			.player {
 				color: crimson;
+				background-color: rgb(47, 46, 46);
 			}
 
 			.cell { 
@@ -48,14 +56,22 @@
 			}
 
 			.player2 { 
-				background: blue; 
+				background: darkcyan; 
 			}
 
 			.column { 
 				display: flex; 
 				flex-direction: column-reverse; 
 			}
+
+			.column.highlight {
+				background-color: grey;
+			}
+
 			button { 
+				position: absolute;
+				top: 20px;
+				right: 20px;
 				margin-top: 20px; 
 				padding: 10px; 
 				font-size: 16px; 
