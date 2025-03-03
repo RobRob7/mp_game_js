@@ -35,6 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // function will reset the game to start
+// pre:
+//      NONE
+// post:
+//      NONE
 function resetGame() {
 
     // reset game board structure
@@ -55,6 +59,10 @@ function resetGame() {
 
 
 // this function will populate the inital game board
+// pre:
+//      NONE
+// post:
+//      NONE
 function createBoard() {
     // get element id 'gameBoard'
     const gameBoard = document.getElementById('gameBoard');
@@ -109,6 +117,10 @@ function createBoard() {
 
 
 // function will drop appropriate piece on board
+// pre:
+//      col - column to place piece
+// post:
+//      NONE
 function placePieceOnBoard(col) {
     // loop through all rows of board
     for (let r = 0; r < rows; r++) {
@@ -149,6 +161,10 @@ function placePieceOnBoard(col) {
 
 
 // function will update the board
+// pre:
+//      NONE
+// post:
+//      NONE
 function updateBoardContent() {
     // get all columns
     const columns = document.querySelectorAll('.column');
@@ -170,6 +186,12 @@ function updateBoardContent() {
 
 
 // function will check for a win
+// pre:
+//      row - row
+//      col - column
+// post:
+//      true -  win condition is met
+//      false - win condition is unmet
 function checkWin(row, col) {
     // check for each win direction, else no win    
     if(checkWinDirection(row, col, 1, 0)) {
@@ -192,6 +214,14 @@ function checkWin(row, col) {
 
 // function will check the direction of all 
 // possible win conditions
+// pre:
+//      row - row
+//      col - column
+//      rowDir - check in direction of row
+//      colDir - check in direction of column
+// post:
+//      true -  win condition is met
+//      false - win condition is unmet
 function checkWinDirection(row, col, rowDir, colDir) {
     // will hold count of correctly connected pieces
     let count = 1;
