@@ -24,11 +24,34 @@ const playerLabelArray = ['Player 1 Turn', 'Player 2 Turn'];
 // array containing all possible player chip colors
 const playerLabelColorArray = ['crimson', 'darkcyan'];
 
+// will hold win direction
+let winDirection;
+
 // as soon as DOM loaded
 document.addEventListener("DOMContentLoaded", () => {
     // call resetGame
     resetGame();
 });
+
+
+// function will reset the game to start
+function resetGame() {
+
+    // reset game board structure
+    boardStruct = Array.from({ length: rows }, () => Array(columns).fill(null));
+
+    // reset current player to player1
+    currentPlayer = 'player1';
+
+    // reset current player label color to player1 color
+    currentPlayerLabel.style.color = playerLabelColorArray[0];
+
+    // reset current player label text to player1
+    currentPlayerLabel.textContent = playerLabelArray[0];
+
+    // call createBoard
+    createBoard();
+} // end of resetGame()
 
 
 // this function will populate the inital game board
@@ -63,11 +86,11 @@ function createBoard() {
 
             // append cell element to its column
             column.appendChild(cell);
-        }
+        } // end for
 
-        // listen for click on column (call dropPiece function on click
+        // listen for click on column (call placePieceOnBoard function on click
         // for appropriate column)
-        column.addEventListener('click', () => dropPiece(c));
+        column.addEventListener('click', () => placePieceOnBoard(c));
 
         // listen for hover on column (highlight column)
         column.addEventListener('mouseenter', () => {
@@ -81,12 +104,12 @@ function createBoard() {
 
         // add column to game board
         gameBoard.appendChild(column);
-    }
+    } // end for
 } // end of createBoard()
 
 
 // function will drop appropriate piece on board
-function dropPiece(col) {
+function placePieceOnBoard(col) {
     // loop through all rows of board
     for (let r = 0; r < rows; r++) {
         // only drop piece if column is NOT full
@@ -95,12 +118,12 @@ function dropPiece(col) {
             boardStruct[r][col] = currentPlayer;
 
             // update the board
-            updateBoard();
+            updateBoardContent();
 
             // check for a win
             if (checkWin(r, col)) {
                 // display pop-up window of winner
-                setTimeout(() => alert(`${currentPlayer.toUpperCase()} Wins!`), 7);
+                setTimeout(() => alert(`${currentPlayer.toUpperCase()} Wins!\nWin Direction: ${winDirection}`), 7);
 
                 // restart the game (in play after alert window is closed)
                 setTimeout(() => resetGame(), 7);
@@ -121,12 +144,12 @@ function dropPiece(col) {
             // return from function
             return;
         }
-    }
-} // end of dropPiece(...)
+    } // end for
+} // end of placePieceOnBoard(...)
 
 
 // function will update the board
-function updateBoard() {
+function updateBoardContent() {
     // get all columns
     const columns = document.querySelectorAll('.column');
 
@@ -143,59 +166,69 @@ function updateBoard() {
                 cell.classList.add(boardStruct[r][c]);
         });
     });
-} // end of updateBoard()
+} // end of updateBoardContent()
 
 
 // function will check for a win
 function checkWin(row, col) {
-    // if vertical, horizontal, diagonal /, diagonal \
-    if(checkDirection(row, col, 1, 0) ||
-        checkDirection(row, col, 0, 1) ||
-        checkDirection(row, col, 1, 1) ||
-        checkDirection(row, col, 1, -1)) {
-            return true;
-        }
+    // check for each win direction, else no win    
+    if(checkWinDirection(row, col, 1, 0)) {
+        winDirection = 'Vertical';
+        return true;
+    } else if(checkWinDirection(row, col, 0, 1)) {
+        winDirection = 'Horizontal';
+        return true;
+    } else if(checkWinDirection(row, col, 1, 1)) {
+        winDirection = 'Diagonal /';
+        return true;
+    } else if(checkWinDirection(row, col, 1, -1)) {
+        winDirection = 'Diagonal \\';
+        return true;
+    } else {
+        return false;
+    }
 } // end of checkWin(...)
 
 
 // function will check the direction of all 
 // possible win conditions
-function checkDirection(row, col, rowDir, colDir) {
+function checkWinDirection(row, col, rowDir, colDir) {
     // will hold count of correctly connected pieces
     let count = 1;
 
-    // loop
+    // loop through 3 iterations (count + 3 will give us >= 4 - a connect)
     for (let i = 1; i < 4; i++) {
-        let r = row + i * rowDir, c = col + i * colDir;
-        if (r >= 0 && r < rows && c >= 0 && c < columns && boardStruct[r][c] === currentPlayer) count++;
-        else break;
-    }
-    // loop
+        // calculate next piece on board (in forward direction)
+        let r = row + i * rowDir; // row
+        let c = col + i * colDir; // column
+
+        // check for row, column within bounds
+        let rowIsInBounds = r >= 0 && r < rows;
+        let colIsInBounds = c >= 0 && c < columns;
+
+        // check is in bounds, and is current player
+        if (rowIsInBounds && colIsInBounds && boardStruct[r][c] === currentPlayer)
+            count++;
+        else
+            break;
+    } // end for
+
+    // loop through 3 iterations (count + 3 will give us >= 4 - a connect)
     for (let i = 1; i < 4; i++) {
-        let r = row - i * rowDir, c = col - i * colDir;
-        if (r >= 0 && r < rows && c >= 0 && c < columns && boardStruct[r][c] === currentPlayer) count++;
-        else break;
-    }
+        // calculate next piece on board (in backward direction)
+        let r = row - i * rowDir; // row
+        let c = col - i * colDir; // column
+
+        // check for row, column within bounds
+        let rowIsInBounds = r >= 0 && r < rows;
+        let colIsInBounds = c >= 0 && c < columns;
+        
+        // check is in bounds, and is current player
+        if (rowIsInBounds && colIsInBounds && boardStruct[r][c] === currentPlayer)
+            count++;
+        else
+            break;
+    } // end for
     // return true if count >= 4 (win condition)
     return count >= 4;
-} // end of checkDirection(...)
-
-
-// function will reset the game to start
-function resetGame() {
-
-    // reset game board structure
-    boardStruct = Array.from({ length: rows }, () => Array(columns).fill(null));
-
-    // reset current player to player1
-    currentPlayer = 'player1';
-
-    // reset current player label color to player1 color
-    currentPlayerLabel.style.color = playerLabelColorArray[0];
-
-    // reset current player label text to player1
-    currentPlayerLabel.textContent = playerLabelArray[0];
-
-    // call createBoard
-    createBoard();
-} // end of resetGame()
+} // end of checkWinDirection(...)
