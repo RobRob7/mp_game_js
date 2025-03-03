@@ -6,8 +6,12 @@
 		<title>Connect 4</title>
 		<link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
 		<style>
+			.title {
+				color: white;
+			}
+
 			body { 
-				background-color: grey;
+				background-image: url('../assets/background/space.jpg');
 				text-align: center; 
 				font-family: Arial, sans-serif; 
 				display: flex;
@@ -26,7 +30,7 @@
 			}
 
 			.player {
-				color: red;
+				color: crimson;
 			}
 
 			.cell { 
@@ -44,7 +48,7 @@
 			}
 
 			.player2 { 
-				background: darkblue; 
+				background: blue; 
 			}
 
 			.column { 
@@ -59,7 +63,7 @@
 		</style>
 	</head>
 	<body>
-		<h1>Connect 4</h1>
+		<h1 class="title">Connect 4</h1>
 		<div id="gameBoard" class="board"></div>
 		<div id="currentPlayerLabel" class="player"></div>
 		<button onclick="resetGame()">Restart</button>
