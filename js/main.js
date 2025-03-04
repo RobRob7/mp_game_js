@@ -132,6 +132,11 @@ function placePieceOnBoard(col) {
             // update the board
             updateBoardContent();
 
+            // animate the piece just placed
+            const newPiece = document.querySelector(`.column[data-col="${col}"] .cell[data-row="${r}"]`);
+            newPiece.style.animation = 'pop 0.3s ease-in-out';
+            setTimeout(() => (newPiece.style.animation = ''), 300);
+
             // check for a win
             if (checkWin(r, col)) {
                 // display pop-up window of winner

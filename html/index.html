@@ -76,6 +76,13 @@
 				transform: scale(1.05);
 			}
 
+			@keyframes pop {
+				0%   { transform: scale(0.25); opacity: 0.25; }
+				25%  { transform: scale(0.50); opacity: 0.50; }
+				75%  { transform: scale(0.75); opacity: 0.75; }
+				100% { transform: scale(1); opacity: 1; }
+			}
+
 			button { 
 				position: absolute;
 				top: 20px;
