@@ -1,0 +1,121 @@
+<!-- 
+// CS 532 - Modern Web Technologies
+// Robert J. Armendariz
+// 03-03-2025
+// File: index.html
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Connect 4</title>
+		<link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
+		<style>
+			.title {
+				background: linear-gradient(135deg, #ffcc00, #ff0000);
+				font-size: 65px;
+				font-weight: bold;
+				text-transform: uppercase;
+				text-align: center;
+				letter-spacing: 2px;
+				text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+			}
+
+			body { 
+				background-image: url('../assets/background/space.jpg');
+				text-align: center; 
+				font-family: Arial, sans-serif; 
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				height: 100vh;
+				margin: 0;
+			}
+
+			.board { 
+				display: grid;
+				grid-template-columns: repeat(7, 60px);
+				gap: 5px;
+				margin: 20px auto;
+			}
+
+			.player {
+				color: crimson;
+				background-color: rgb(47, 46, 46);
+				font-size: 25px;
+			}
+
+			.cell { 
+				width: 60px;
+				height: 60px; 
+				background: black; 
+				border-radius: 50%; 
+				display: flex; 
+				align-items: center; 
+				justify-content: center; 
+			}
+
+			.player1 { 
+				background: crimson; 
+			}
+
+			.player2 { 
+				background: darkcyan; 
+			}
+
+			.column { 
+				display: flex; 
+				flex-direction: column;
+			}
+
+			.column.highlight {
+				background-color: grey;
+				transform: scale(1.05);
+			}
+
+			@keyframes pop {
+				0%   { transform: scale(0.25); opacity: 0.25; }
+				25%  { transform: scale(0.50); opacity: 0.50; }
+				75%  { transform: scale(0.75); opacity: 0.75; }
+				100% { transform: scale(1); opacity: 1; }
+			}
+
+			button { 
+				position: absolute;
+				top: 20px;
+				right: 20px;
+				margin-top: 20px; 
+				padding: 12px 20px; 
+				font-size: 16px; 
+				font-weight: bold;
+				color: black;
+				background: linear-gradient(135deg, #ffcc00, #ff0000);
+				border: none;
+				border-radius: 8px;
+				box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+				cursor: pointer;
+				transition: all 0.3s ease;
+			}
+			
+			button:hover {
+				transform: scale(1.05);
+			}
+			
+			button:active {
+				transform: scale(0.98);
+				box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+			}
+		</style>
+	</head>
+	<body>
+		<h1 class="title">Connect 4</h1>
+		<div id="gameBoard" class="board"></div>
+		<div id="currentPlayerLabel" class="player"></div>
+		<button onclick="resetGame()">Restart</button>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="../js/main.js"></script>
+	</body>
+</html>
