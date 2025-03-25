@@ -6,6 +6,9 @@
 // express
 const express = require('express');
 
+// port to connect to
+const PORT = 3000;
+
 // http
 const http = require('http');
 
@@ -92,6 +95,6 @@ io.on('connection', (socket) => {
 });
 
 // server listen on port 3000
-server.listen(3000, () => {
-    console.log('Server running at http://localhost:3000');
+server.listen(PORT, () => {
+    console.log('Server running at http://localhost:' + PORT);
 });
